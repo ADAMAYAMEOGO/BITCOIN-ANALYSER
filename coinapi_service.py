@@ -34,9 +34,9 @@ def get_all_assets():
     for i in range(10):
         print(data[i]["asset_id"], ":", data[i]["name"])
 
-def coinapi_get_exchange_rates(asset, time_start, time_end):
+def coinapi_get_exchange_rates(assets, time_start, time_end):
         
-    url = BASE_URL + f'/v1/exchangerate/{asset}/EUR/history?period_id=1DAY&time_start={time_start}T00:00:00&time_end={time_end}T00:00:00'
+    url = BASE_URL + f'/v1/exchangerate/{assets}/history?period_id=1DAY&time_start={time_start}T00:00:00&time_end={time_end}T00:00:00'
     headers = {'X-CoinAPI-Key' : API_KEY}
     response = requests.get(url, headers=headers)
     if response.status_code==200:
