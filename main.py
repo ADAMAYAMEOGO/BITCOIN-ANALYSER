@@ -1,34 +1,11 @@
-import requests
-from api_config import API_KEY
-import json
+from coinapi_service import get_all_assets, coinapi_get_exchange_rates
+from datetime import date, timedelta
 
 
-BASE_URL = "https://rest.coinapi.io"
-url = BASE_URL + "/v1/exchangerate/BTC/USD"
+date_today_str = date.today().strftime('%Y-%m-%d')
+date_ten_left_str = (date.today()-timedelta(10)).strftime('%Y-%m-%d')
 
-headers = {"X-CoinAPI-Key" : API_KEY}
-response = requests.get(url, headers=headers)
-
-value=response.status_code
-
-def test_response(value):
-    match value:
-        case 404:
-            print("The requested order was not found.")
-        case 400:
-            print("Bad Request -- There is something wrong with your reques")
-        case 401:
-            print("Unauthorized -- Your API key is wrong")
-        case 403:
-            print("Forbidden -- Your API key doesnt't have enough privileges to access this resource")
-        case 429:
-            print("Too many requests -- You have exceeded your API key rate limits") 
-    return value
-
-
-if value==200:
-    data= json.loads(response.text)
-else:
-    print("code erreur: ", value)
-    test_response(value)
-print()
+#get_all_assets()
+datas = coinapi_get_exchange_rates('BTC', date_ten_left_str,date_today_str)
+for d in datas:
+    print(f"Date: {d['time_period_start'][0:10]} : {int(d['rate_close'])}")

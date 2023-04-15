@@ -1,0 +1,2 @@
+API_KEY= 'F9C302B3-1D23-4180-B6FA-4815F51DA4FD'
+BASE_URL = "https://rest.coinapi.io"
